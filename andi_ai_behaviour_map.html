@@ -1,0 +1,202 @@
+
+<h2 class="sr-only">ANDI AI behaviour map — what the AI does across each product surface, from submission through to brief</h2>
+<style>
+*{box-sizing:border-box}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.surface{margin-bottom:1.5rem}
+.s-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.s-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.s-label{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.s-count{font-size:11px;color:var(--color-text-tertiary)}
+.rows{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden}
+.row{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.row:last-child{border-bottom:none}
+.behaviour{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:2px;min-width:180px;flex-shrink:0}
+.desc{font-size:12px;color:var(--color-text-secondary);line-height:1.55;flex:1}
+.tag{font-size:10px;padding:2px 7px;border-radius:20px;white-space:nowrap;flex-shrink:0;margin-top:1px}
+.mvp{background:#E1F5EE;color:#085041;border:0.5px solid #9FE1CB}
+.v1{background:#EEEDFE;color:#3C3489;border:0.5px solid #AFA9EC}
+.v2{background:var(--color-background-secondary);color:var(--color-text-tertiary);border:0.5px solid var(--color-border-tertiary)}
+.rule{background:#FAEEDA;color:#633806;border:0.5px solid #FAC775}
+.divider{height:0.5px;background:var(--color-border-tertiary);margin:1.5rem 0}
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:1.5rem}
+.li{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--color-text-secondary)}
+.ld{width:8px;height:8px;border-radius:50%}
+</style>
+
+<div class="legend">
+  <div class="li"><div class="ld" style="background:#1D9E75"></div>MVP</div>
+  <div class="li"><div class="ld" style="background:#534AB7"></div>V1</div>
+  <div class="li"><div class="ld" style="background:var(--color-border-secondary)"></div>V2+</div>
+  <div class="li"><div class="ld" style="background:#854F0B"></div>Principle — never changes</div>
+</div>
+
+<div class="surface">
+  <div class="s-head">
+    <div class="s-dot" style="background:#0F6E56"></div>
+    <div class="s-label">Submission</div>
+    <div class="s-count">When a contributor types and submits</div>
+  </div>
+  <div class="rows">
+    <div class="row">
+      <div class="behaviour">Mode detection</div>
+      <div class="desc">Infers "Add to canvas" or "Start discussion" from word count in real time. Under 8 words = topic, 8+ = insight. Updates live as they type.</div>
+      <span class="tag mvp">MVP</span>
+    </div>
+    <div class="row">
+      <div class="behaviour">Topic extraction</div>
+      <div class="desc">On insight submit, extracts 2–4 key terms from the body and adds them to the Topic Canvas as grey pills.</div>
+      <span class="tag mvp">MVP</span>
+    </div>
+    <div class="row">
+      <div class="behaviour">Discussion title</div>
+      <div class="desc">Generates a short, descriptive title for the discussion from the insight body. Should be faithful to the contributor's framing — not a reinterpretation.</div>
+      <span class="tag mvp">MVP</span>
+    </div>
+    <div class="row">
+      <div class="behaviour">Never rewords the input</div>
+      <div class="desc">The contributor's exact words appear in the discussion and the brief. ANDI generates titles and extracts terms — it does not paraphrase or clean up what was written.</div>
+      <span class="tag rule">Principle</span>
+    </div>
+  </div>
+</div>
+
+<div class="surface">
+  <div class="s-head">
+    <div class="s-dot" style="background:#993C1D"></div>
+    <div class="s-label">Theme detection</div>
+    <div class="s-count">Running in background throughout the session</div>
+  </div>
+  <div class="rows">
+    <div class="row">
+      <div class="behaviour">Semantic clustering</div>
+      <div class="desc">Groups inputs by semantic similarity using embeddings. Re-evaluates after every 5 new submissions. Produces theme suggestions when ≥5 inputs share a common topic.</div>
+      <span class="tag mvp">MVP</span>
+    </div>
+    <div class="row">
+      <div class="behaviour">Theme naming</div>
+      <div class="desc">Generates a label and a one-sentence rationale for each suggested theme. Label should be editable by the host before activation.</div>
+      <span class="tag mvp">MVP</span>
+    </div>
+    <div class="row">
+      <div class="behaviour">Watching list</div>
+      <div class="desc">Tracks emerging topics with 2–4 matching inputs. Surfaces them to the host as early signals — not yet actionable suggestions.</div>
+      <span class="tag mvp">MVP</span>
+    </div>
+    <div class="row">
+      <div class="behaviour">Retroactive assignment</div>
+      <div class="desc">When a theme is activated, ANDI assigns all existing matching inputs to it — not just future ones. Topic Canvas updates immediately.</div>
+      <span class="tag mvp">MVP</span>
+    </div>
+    <div class="row">
+      <div class="behaviour">Split suggestion</div>
+      <div class="desc">Detects when an active theme has high internal diversity — two distinct sub-problems inside one cluster. Suggests a split with draft labels for each sub-theme.</div>
+      <span class="tag v1">V1</span>
+    </div>
+    <div class="row">
+      <div class="behaviour">Never auto-activates</div>
+      <div class="desc">ANDI suggests, the host decides. Themes are never activated automatically. No cluster is surfaced to contributors until the host explicitly activates it.</div>
+      <span class="tag rule">Principle</span>
+    </div>
+  </div>
+</div>
+
+<div class="surface">
+  <div class="s-head">
+    <div class="s-dot" style="background:#534AB7"></div>
+    <div class="s-label">Discussion</div>
+    <div class="s-count">Inside theme threads</div>
+  </div>
+  <div class="rows">
+    <div class="row">
+      <div class="behaviour">Follow-up prompt</div>
+      <div class="desc">Posts a contextual question below each insight — inline in the thread, visually distinct. Should read like a curious colleague, not a form field. One prompt per insight, not per reply.</div>
+      <span class="tag v1">V1</span>
+    </div>
+    <div class="row">
+      <div class="behaviour">Conflict detection</div>
+      <div class="desc">Identifies when two contributors — especially from different roles or departments — hold directly opposing views on the same topic. Surfaces a conflict flag on the theme card and in the brief.</div>
+      <span class="tag v1">V1</span>
+    </div>
+    <div class="row">
+      <div class="behaviour">Participation nudge</div>
+      <div class="desc">Sends a contextual re-engagement message to contributors who haven't participated. References their role and the specific theme where their voice is missing. Not a generic reminder.</div>
+      <span class="tag v1">V1</span>
+    </div>
+    <div class="row">
+      <div class="behaviour">Never posts as a contributor</div>
+      <div class="desc">ANDI is always visually distinct in discussions — its own avatar, its own label. It never appears as a named contributor. It asks questions; it does not share opinions.</div>
+      <span class="tag rule">Principle</span>
+    </div>
+    <div class="row">
+      <div class="behaviour">Never suppresses input</div>
+      <div class="desc">ANDI does not hide, filter, or deprioritise any contribution — including low-voted or anonymous ones. All inputs are visible to contributors and used in synthesis.</div>
+      <span class="tag rule">Principle</span>
+    </div>
+  </div>
+</div>
+
+<div class="surface">
+  <div class="s-head">
+    <div class="s-dot" style="background:#854F0B"></div>
+    <div class="s-label">Brief generation</div>
+    <div class="s-count">On host request, per theme</div>
+  </div>
+  <div class="rows">
+    <div class="row">
+      <div class="behaviour">Full brief draft</div>
+      <div class="desc">Generates summary, signal strength scores, key tensions, representative voices, opportunity areas, and gap alerts. Treats the output as a first draft the host owns — not a final document.</div>
+      <span class="tag mvp">MVP</span>
+    </div>
+    <div class="row">
+      <div class="behaviour">Net score weighting</div>
+      <div class="desc">Weights inputs by net score (upvotes minus downvotes) when selecting representative voices and ranking opportunity areas. Negative net score inputs are included as contrary perspectives.</div>
+      <span class="tag mvp">MVP</span>
+    </div>
+    <div class="row">
+      <div class="behaviour">Gap alerts</div>
+      <div class="desc">Identifies contributor roles or departments that are underrepresented in a theme relative to the full workshop participant list. Surfaces these as specific named gaps, not generic warnings.</div>
+      <span class="tag v1">V1</span>
+    </div>
+    <div class="row">
+      <div class="behaviour">Living brief</div>
+      <div class="desc">Brief updates in real time as new inputs arrive — not just on manual regeneration request. Host edits are preserved across updates.</div>
+      <span class="tag v2">V2+</span>
+    </div>
+    <div class="row">
+      <div class="behaviour">Never makes decisions</div>
+      <div class="desc">ANDI surfaces and ranks. It does not recommend a course of action, prioritise a roadmap, or tell the host what to build. Opportunity areas are findings, not directives.</div>
+      <span class="tag rule">Principle</span>
+    </div>
+    <div class="row">
+      <div class="behaviour">Always shows its working</div>
+      <div class="desc">Every claim in the brief links back to the input that generated it. Confidence scores are visible and explained. The host can interrogate any finding — nothing is a black box.</div>
+      <span class="tag rule">Principle</span>
+    </div>
+  </div>
+</div>
+
+<div class="surface">
+  <div class="s-head">
+    <div class="s-dot" style="background:#444441"></div>
+    <div class="s-label">Memory &amp; continuity</div>
+    <div class="s-count">Across workshops over time</div>
+  </div>
+  <div class="rows">
+    <div class="row">
+      <div class="behaviour">Cross-workshop theme tracking</div>
+      <div class="desc">Connects themes that recur across multiple workshops. Detects whether a theme is growing, persisting, or resolved. Surfaces this in a longitudinal view available to hosts.</div>
+      <span class="tag v2">V2+</span>
+    </div>
+    <div class="row">
+      <div class="behaviour">Institutional memory</div>
+      <div class="desc">Builds a searchable archive of all themes, briefs, and resolved findings across the organisation. New workshops automatically reference prior signal on related topics.</div>
+      <span class="tag v2">V2+</span>
+    </div>
+    <div class="row">
+      <div class="behaviour">Never uses memory against contributors</div>
+      <div class="desc">Past contributions are never used to identify anonymous contributors across sessions. The memory layer operates at the theme and finding level — not the individual level.</div>
+      <span class="tag rule">Principle</span>
+    </div>
+  </div>
+</div>
