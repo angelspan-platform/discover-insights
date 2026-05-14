@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ANDI Experiment — Team Roles Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f4f5f7; color: #1a1a2e; font-size: 13px; }
+
+  /* Header */
+  .page-header { background: #1a1a2e; color: #fff; padding: 24px 32px 20px; }
+  .page-header h1 { font-size: 20px; font-weight: 600; letter-spacing: -0.3px; margin-bottom: 4px; }
+  .page-header p { color: #9ba3b0; font-size: 12px; }
+
+  /* Role filter */
+  .filter-bar { background: #fff; border-bottom: 1px solid #e2e5eb; padding: 12px 32px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .filter-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; margin-right: 4px; }
+  .role-btn { font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: 20px; border: 2px solid transparent; cursor: pointer; transition: all 0.15s; }
+  .role-btn.all { background: #1a1a2e; color: #fff; border-color: #1a1a2e; }
+  .role-btn.all:hover { opacity: 0.85; }
+  .role-btn.preparer  { background: #fff; color: #1d4ed8; border-color: #1d4ed8; }
+  .role-btn.prompter  { background: #fff; color: #047857; border-color: #047857; }
+  .role-btn.moderator { background: #fff; color: #b45309; border-color: #b45309; }
+  .role-btn.evaluator { background: #fff; color: #6d28d9; border-color: #6d28d9; }
+  .role-btn.active.preparer  { background: #1d4ed8; color: #fff; }
+  .role-btn.active.prompter  { background: #047857; color: #fff; }
+  .role-btn.active.moderator { background: #b45309; color: #fff; }
+  .role-btn.active.evaluator { background: #6d28d9; color: #fff; }
+  .reset-btn { margin-left: auto; font-size: 11px; padding: 5px 12px; background: none; border: 1px solid #d1d5db; border-radius: 6px; color: #6b7280; cursor: pointer; }
+  .reset-btn:hover { background: #f9fafb; }
+
+  /* Legend */
+  .legend { display: flex; gap: 20px; padding: 10px 32px; background: #fff; border-bottom: 1px solid #e2e5eb; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #6b7280; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  /* Table wrap */
+  .table-wrap { padding: 20px 24px; overflow-x: auto; }
+  table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 900px; }
+
+  /* Col headers */
+  thead th { padding: 10px 14px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; text-align: left; border-bottom: 2px solid #e5e7eb; position: sticky; top: 0; z-index: 10; background: #f4f5f7; }
+  .th-stage { color: #6b7280; width: 130px; }
+  .th-preparer  { color: #1d4ed8; background: #eff6ff; border-top: 3px solid #1d4ed8; }
+  .th-prompter  { color: #047857; background: #ecfdf5; border-top: 3px solid #047857; }
+  .th-moderator { color: #b45309; background: #fffbeb; border-top: 3px solid #b45309; }
+  .th-evaluator { color: #6d28d9; background: #f5f3ff; border-top: 3px solid #6d28d9; }
+
+  /* Stage divider rows */
+  tr.stage-header td { background: #1a1a2e; color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; padding: 8px 14px; }
+  tr.stage-header td.stage-label { color: #fff; }
+  tr.stage-header td.stage-desc { color: #9ba3b0; font-size: 11px; font-weight: 400; text-transform: none; letter-spacing: 0; }
+
+  /* Data cells */
+  td.stage-name { font-size: 11px; font-weight: 700; color: #374151; padding: 0 14px; vertical-align: top; width: 130px; }
+  td.role-cell { vertical-align: top; padding: 12px; border-right: 1px solid #f0f2f5; border-bottom: 1px solid #f0f2f5; transition: opacity 0.2s; }
+  td.role-cell:last-child { border-right: none; }
+  tr:last-child td { border-bottom: none; }
+
+  /* Cell interior */
+  .cell-inner { padding: 2px 0; }
+  .cell-section { margin-bottom: 10px; }
+  .cell-section:last-child { margin-bottom: 0; }
+  .section-label { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; display: block; }
+  .section-label.do       { color: #1d4ed8; }
+  .section-label.consider { color: #b45309; }
+  .section-label.produce  { color: #047857; }
+  .section-content { font-size: 12px; color: #374151; line-height: 1.5; }
+  .section-content li { margin-left: 14px; margin-bottom: 2px; list-style: disc; }
+
+  /* Inactive cell */
+  .inactive-cell { background: #f9fafb; display: flex; align-items: center; justify-content: center; min-height: 80px; border-radius: 4px; }
+  .inactive-label { font-size: 11px; color: #d1d5db; font-style: italic; }
+
+  /* Role column backgrounds */
+  td.cell-preparer  { background: #fafcff; }
+  td.cell-prompter  { background: #f9fffe; }
+  td.cell-moderator { background: #fffdf5; }
+  td.cell-evaluator { background: #fdfaff; }
+
+  /* Dimmed state when filtering */
+  .dimmed { opacity: 0.15; }
+  .highlighted { box-shadow: inset 0 0 0 2px rgba(99, 102, 241, 0.3); }
+
+  /* Role pill in stage-name cell */
+  .stage-cell { padding: 12px 10px 12px 14px; vertical-align: top; border-right: 1px solid #e5e7eb; border-bottom: 1px solid #f0f2f5; }
+  .stage-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; display: block; margin-bottom: 3px; }
+  .priority-tag { display: inline-block; font-size: 9px; font-weight: 700; padding: 1px 6px; border-radius: 3px; margin-top: 4px; }
+  .mvp-tag  { background: #166534; color: #fff; }
+  .v1-tag   { background: #d97706; color: #fff; }
+  .prep-tag { background: #374151; color: #fff; }
+  .doc-tag  { background: #6366f1; color: #fff; }
+
+  @media print {
+    .filter-bar, .legend { display: none; }
+    .table-wrap { padding: 0; }
+    body { background: #fff; }
+    .page-header { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>ANDI Experiment — Team Roles Guide</h1>
+  <p>What each role is doing, thinking about, and producing at every stage of the experiment</p>
+</div>
+
+<div class="filter-bar">
+  <span class="filter-label">Filter by role</span>
+  <button class="role-btn all active" onclick="filterRole('all')">All roles</button>
+  <button class="role-btn preparer" onclick="filterRole('preparer')">Preparer</button>
+  <button class="role-btn prompter" onclick="filterRole('prompter')">Prompter</button>
+  <button class="role-btn moderator" onclick="filterRole('moderator')">Moderator</button>
+  <button class="role-btn evaluator" onclick="filterRole('evaluator')">Evaluator</button>
+  <button class="reset-btn" onclick="filterRole('all')">Reset</button>
+</div>
+
+<div class="legend">
+  <span class="filter-label">Cell key</span>
+  <span class="legend-item"><span class="legend-dot" style="background:#1d4ed8"></span> DO — concrete actions</span>
+  <span class="legend-item"><span class="legend-dot" style="background:#b45309"></span> CONSIDER — judgment questions to keep in mind</span>
+  <span class="legend-item"><span class="legend-dot" style="background:#047857"></span> PRODUCE — what this role outputs at this stage</span>
+</div>
+
+<div class="table-wrap">
+<table>
+<thead>
+  <tr>
+    <th class="th-stage">Stage</th>
+    <th class="th-preparer role-col-preparer">Preparer</th>
+    <th class="th-prompter role-col-prompter">Prompter</th>
+    <th class="th-moderator role-col-moderator">Moderator</th>
+    <th class="th-evaluator role-col-evaluator">Evaluator</th>
+  </tr>
+</thead>
+<tbody>
+
+  <!-- PREPARATION -->
+  <tr class="stage-header">
+    <td class="stage-label">Preparation</td>
+    <td class="stage-desc" colspan="4">Everything that happens before a prompt is run. If this is skipped or done poorly, results from the experiment are unreliable.</td>
+  </tr>
+  <tr>
+    <td class="stage-cell">
+      <span class="stage-tag">Before any stage</span>
+      <span class="priority-tag prep-tag">Setup</span>
+    </td>
+    <td class="role-cell cell-preparer role-col-preparer">
+      <div class="cell-inner">
+        <div class="cell-section">
+          <span class="section-label do">Do</span>
+          <div class="section-content"><ul>
+            <li>Read SPL transcripts and extract discrete statements into a spreadsheet — one statement per row, include speaker role</li>
+            <li>Write the workshop prompt for each community (one sentence framing the problem)</li>
+            <li>Set up Claude Projects with system prompt and uploaded files</li>
+            <li>Prepare a blank evaluation log with one row per MVP behavior</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label consider">Consider</span>
+          <div class="section-content"><ul>
+            <li>Is each extracted statement standalone, or does it only make sense in context?</li>
+            <li>Is the workshop prompt specific enough, or so broad any theme could be justified against it?</li>
+            <li>Are speaker roles being captured accurately for gap alert testing?</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label produce">Produce</span>
+          <div class="section-content"><ul>
+            <li>Inputs spreadsheet (75–100 inputs minimum)</li>
+            <li>Configured Claude Projects, ready to run</li>
+            <li>Blank evaluation log</li>
+          </ul></div>
+        </div>
+      </div>
+    </td>
+    <td class="role-cell cell-prompter role-col-prompter">
+      <div class="cell-inner">
+        <div class="cell-section">
+          <span class="section-label do">Do</span>
+          <div class="section-content"><ul>
+            <li>Read all MVP behaviors in the framework</li>
+            <li>Understand the clustering prompt and the brief generation prompt before running either</li>
+            <li>Confirm the batch-of-5 process and what to record after each run</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label consider">Consider</span>
+          <div class="section-content"><ul>
+            <li>What does a good theme suggestion look like vs. a vague or premature one?</li>
+            <li>What am I specifically watching for during each batch?</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label produce">Produce</span>
+          <div class="section-content"><ul>
+            <li>Clear understanding of each prompt and what to log</li>
+          </ul></div>
+        </div>
+      </div>
+    </td>
+    <td class="role-cell cell-moderator role-col-moderator">
+      <div class="cell-inner">
+        <div class="cell-section">
+          <span class="section-label do">Do</span>
+          <div class="section-content"><ul>
+            <li>Review the SPL engagement context and recall what themes came out of the real engagement</li>
+            <li>Define personal approval standards before the experiment starts — write them down</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label consider">Consider</span>
+          <div class="section-content"><ul>
+            <li>What themes would I expect the AI to surface?</li>
+            <li>What is the bar for approval — specificity, accuracy, recognizability to contributors?</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label produce">Produce</span>
+          <div class="section-content"><ul>
+            <li>Written approval standard, defined before any AI output is seen</li>
+          </ul></div>
+        </div>
+      </div>
+    </td>
+    <td class="role-cell cell-evaluator role-col-evaluator">
+      <div class="cell-inner">
+        <div class="cell-section">
+          <span class="section-label do">Do</span>
+          <div class="section-content"><ul>
+            <li>Set up the evaluation log with one row per MVP behavior</li>
+            <li>Read and understand the pass/fail criteria for each behavior in the framework</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label consider">Consider</span>
+          <div class="section-content"><ul>
+            <li>What specific evidence would constitute a pass for each behavior?</li>
+            <li>What would a clear failure look like?</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label produce">Produce</span>
+          <div class="section-content"><ul>
+            <li>Evaluation log template, populated and ready to record observations</li>
+          </ul></div>
+        </div>
+      </div>
+    </td>
+  </tr>
+
+  <!-- STAGE 2 -->
+  <tr class="stage-header">
+    <td class="stage-label">Stage 2</td>
+    <td class="stage-desc" colspan="4">Theme Identification — Feed inputs in batches of 5. Observe how the AI clusters and names themes. Moderator reviews and approves.</td>
+  </tr>
+  <tr>
+    <td class="stage-cell">
+      <span class="stage-tag">Theme Identification</span>
+      <span class="priority-tag mvp-tag">MVP</span>
+    </td>
+    <td class="role-cell cell-preparer role-col-preparer">
+      <div class="cell-inner">
+        <div class="cell-section">
+          <span class="section-label do">Do</span>
+          <div class="section-content"><ul>
+            <li>Hand inputs spreadsheet to the Prompter</li>
+            <li>Be available to answer questions about extraction decisions</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label consider">Consider</span>
+          <div class="section-content"><ul>
+            <li>Were there ambiguous inputs during extraction that the Prompter should know about?</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label produce">Produce</span>
+          <div class="section-content"><ul>
+            <li>Clarifications on specific inputs as needed (supporting role)</li>
+          </ul></div>
+        </div>
+      </div>
+    </td>
+    <td class="role-cell cell-prompter role-col-prompter">
+      <div class="cell-inner">
+        <div class="cell-section">
+          <span class="section-label do">Do</span>
+          <div class="section-content"><ul>
+            <li>Paste first 5 inputs and run the clustering prompt</li>
+            <li>Record the AI response, then add 5 more and run again</li>
+            <li>Repeat until all inputs are processed</li>
+            <li>Log theme suggestions after every batch — do not filter or summarize</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label consider">Consider</span>
+          <div class="section-content"><ul>
+            <li>Is the AI holding back with little data, or suggesting themes prematurely?</li>
+            <li>Are theme suggestions changing significantly between batches, or stabilizing?</li>
+            <li>Are labels specific ("Invoice-to-Cash Handoff") or generic ("Process Issues")?</li>
+            <li>Deliberately run at least one batch of conflicting or sparse inputs</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label produce">Produce</span>
+          <div class="section-content"><ul>
+            <li>Running log of all theme suggestions by batch number</li>
+            <li>Note of the batch at which suggestions first appeared and when they stabilized</li>
+          </ul></div>
+        </div>
+      </div>
+    </td>
+    <td class="role-cell cell-moderator role-col-moderator">
+      <div class="cell-inner">
+        <div class="cell-section">
+          <span class="section-label do">Do</span>
+          <div class="section-content"><ul>
+            <li>Review all theme suggestions at end of the full run</li>
+            <li>For each suggestion: decide Approve, Rename, or Reject</li>
+            <li>Write one sentence of rationale for every decision</li>
+            <li>Flag any inputs that were not assigned to any theme</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label consider">Consider</span>
+          <div class="section-content"><ul>
+            <li>Would contributors recognize their input in this theme?</li>
+            <li>Is the label accurate, or has the AI subtly reframed what was said?</li>
+            <li>Are any two themes actually the same problem described differently?</li>
+            <li>Are unassigned inputs important signals the AI missed?</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label produce">Produce</span>
+          <div class="section-content"><ul>
+            <li>Approved theme list with written rationale for every decision</li>
+          </ul></div>
+        </div>
+      </div>
+    </td>
+    <td class="role-cell cell-evaluator role-col-evaluator">
+      <div class="cell-inner">
+        <div class="cell-section">
+          <span class="section-label do">Do</span>
+          <div class="section-content"><ul>
+            <li>Record which batch produced the first theme suggestion</li>
+            <li>Track when suggestions stabilized across batches</li>
+            <li>Log all moderator decisions (Approve / Rename / Reject) and rationale</li>
+            <li>Note failure modes: premature clustering, generic labels, missed inputs</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label consider">Consider</span>
+          <div class="section-content"><ul>
+            <li>Is the AI's behavior consistent with the framework pass criteria?</li>
+            <li>What specifically passed or failed, and why?</li>
+            <li>What would need to change in the prompt to address failures?</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label produce">Produce</span>
+          <div class="section-content"><ul>
+            <li>Completed Stage 2 rows in the evaluation log</li>
+          </ul></div>
+        </div>
+      </div>
+    </td>
+  </tr>
+
+  <!-- STAGE 3 -->
+  <tr class="stage-header">
+    <td class="stage-label">Stage 3</td>
+    <td class="stage-desc" colspan="4">Discussion Deepening — Test whether AI can generate specific follow-up questions and identify missing voices. Requires approved themes from Stage 2.</td>
+  </tr>
+  <tr>
+    <td class="stage-cell">
+      <span class="stage-tag">Discussion Deepening</span>
+      <span class="priority-tag v1-tag">V1</span>
+    </td>
+    <td class="role-cell cell-preparer role-col-preparer">
+      <div class="inactive-cell"><span class="inactive-label">Not active at this stage</span></div>
+    </td>
+    <td class="role-cell cell-prompter role-col-prompter">
+      <div class="cell-inner">
+        <div class="cell-section">
+          <span class="section-label do">Do</span>
+          <div class="section-content"><ul>
+            <li>Take individual inputs from each approved theme</li>
+            <li>Run the follow-up prompt against a minimum of 10 inputs per theme</li>
+            <li>Record every generated question verbatim — do not paraphrase</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label consider">Consider</span>
+          <div class="section-content"><ul>
+            <li>Is the AI generating one question per input, or more than one?</li>
+            <li>Does the question reference something specific from the input, or is it generic?</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label produce">Produce</span>
+          <div class="section-content"><ul>
+            <li>Log of generated questions paired with their source inputs</li>
+          </ul></div>
+        </div>
+      </div>
+    </td>
+    <td class="role-cell cell-moderator role-col-moderator">
+      <div class="cell-inner">
+        <div class="cell-section">
+          <span class="section-label do">Do</span>
+          <div class="section-content"><ul>
+            <li>Review each generated question alongside its source input</li>
+            <li>Rate each question: <strong>Specific and useful</strong> / <strong>Generic</strong> / <strong>Misleading</strong></li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label consider">Consider</span>
+          <div class="section-content"><ul>
+            <li>If a real participant received this question, would they provide more useful detail than they already gave?</li>
+            <li>Could this question have been written without reading this specific input?</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label produce">Produce</span>
+          <div class="section-content"><ul>
+            <li>Rated question log with one-word assessment per question</li>
+          </ul></div>
+        </div>
+      </div>
+    </td>
+    <td class="role-cell cell-evaluator role-col-evaluator">
+      <div class="cell-inner">
+        <div class="cell-section">
+          <span class="section-label do">Do</span>
+          <div class="section-content"><ul>
+            <li>Review all question ratings and identify patterns</li>
+            <li>Note which input types produce better questions (long vs. short, factual vs. opinion)</li>
+            <li>Flag any questions that could apply to any input regardless of content</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label consider">Consider</span>
+          <div class="section-content"><ul>
+            <li>What is the ratio of specific to generic questions?</li>
+            <li>At what volume or type of input does quality degrade?</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label produce">Produce</span>
+          <div class="section-content"><ul>
+            <li>Completed Stage 3 rows in the evaluation log</li>
+            <li>Pattern summary: which conditions produce better or worse questions</li>
+          </ul></div>
+        </div>
+      </div>
+    </td>
+  </tr>
+
+  <!-- STAGE 4 -->
+  <tr class="stage-header">
+    <td class="stage-label">Stage 4</td>
+    <td class="stage-desc" colspan="4">Brief Synthesis — Generate a structured brief from approved theme inputs. The brief is the primary deliverable. Evaluated against the framework and against known SPL outcomes.</td>
+  </tr>
+  <tr>
+    <td class="stage-cell">
+      <span class="stage-tag">Brief Synthesis</span>
+      <span class="priority-tag mvp-tag">MVP</span>
+    </td>
+    <td class="role-cell cell-preparer role-col-preparer">
+      <div class="inactive-cell"><span class="inactive-label">Not active at this stage</span></div>
+    </td>
+    <td class="role-cell cell-prompter role-col-prompter">
+      <div class="cell-inner">
+        <div class="cell-section">
+          <span class="section-label do">Do</span>
+          <div class="section-content"><ul>
+            <li>Feed the full input set for each approved theme into the brief generation prompt — run once per theme</li>
+            <li>For SPL: also run a thin-data version (fewer inputs than ideal) to test whether the AI flags its own low confidence</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label consider">Consider</span>
+          <div class="section-content"><ul>
+            <li>Does the brief cover all required sections as defined in the framework?</li>
+            <li>Is the structure consistent across themes?</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label produce">Produce</span>
+          <div class="section-content"><ul>
+            <li>Full brief output per approved theme</li>
+            <li>Thin-data brief for SPL (comparison run)</li>
+          </ul></div>
+        </div>
+      </div>
+    </td>
+    <td class="role-cell cell-moderator role-col-moderator">
+      <div class="cell-inner">
+        <div class="cell-section">
+          <span class="section-label do">Do</span>
+          <div class="section-content"><ul>
+            <li>Read each brief as if presenting it to a client</li>
+            <li>Verify every quoted voice against source inputs — any unverifiable quote is an automatic failure</li>
+            <li>Assess overall integrity: does the brief represent the data or distort it?</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label consider">Consider</span>
+          <div class="section-content"><ul>
+            <li>Would I put my name on this and present it in a client meeting?</li>
+            <li>Would the client recognize their team's input in these findings?</li>
+            <li>Are the opportunity areas something that could be acted on, or are they restatements of the theme?</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label produce">Produce</span>
+          <div class="section-content"><ul>
+            <li>Written assessment per brief: <strong>Approve for client use</strong> / <strong>Requires rework</strong> / <strong>Would not use</strong></li>
+            <li>One sentence of reasoning for each assessment</li>
+          </ul></div>
+        </div>
+      </div>
+    </td>
+    <td class="role-cell cell-evaluator role-col-evaluator">
+      <div class="cell-inner">
+        <div class="cell-section">
+          <span class="section-label do">Do</span>
+          <div class="section-content"><ul>
+            <li>Compare brief themes against Stage 2 approved themes — they must match</li>
+            <li>Check each opportunity area for specificity against the pass criteria</li>
+            <li>For SPL: compare brief output against known engagement outcomes</li>
+            <li>Score each section of every brief against the framework pass criteria</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label consider">Consider</span>
+          <div class="section-content"><ul>
+            <li>Is the brief technically accurate but too generic to be useful?</li>
+            <li>Are tensions grounded in specific inputs, or asserted without evidence?</li>
+            <li>Does the thin-data version flag its own uncertainty, or overstate confidence?</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label produce">Produce</span>
+          <div class="section-content"><ul>
+            <li>Completed Stage 4 rows in the evaluation log</li>
+            <li>Overall pass/fail summary across all MVP behaviors</li>
+          </ul></div>
+        </div>
+      </div>
+    </td>
+  </tr>
+
+  <!-- DOCUMENTATION -->
+  <tr class="stage-header">
+    <td class="stage-label">Throughout</td>
+    <td class="stage-desc" colspan="4">Documentation — Ongoing responsibility across all stages. The log of observations is the primary output of the experiment, not the AI's responses.</td>
+  </tr>
+  <tr>
+    <td class="stage-cell">
+      <span class="stage-tag">All stages</span>
+      <span class="priority-tag doc-tag">Ongoing</span>
+    </td>
+    <td class="role-cell cell-preparer role-col-preparer">
+      <div class="inactive-cell"><span class="inactive-label">Active only in Preparation</span></div>
+    </td>
+    <td class="role-cell cell-prompter role-col-prompter">
+      <div class="cell-inner">
+        <div class="cell-section">
+          <span class="section-label do">Do</span>
+          <div class="section-content"><ul>
+            <li>Record all AI responses verbatim — never summarize or paraphrase</li>
+            <li>Note exactly which prompt and inputs produced each response</li>
+            <li>Log unexpected results immediately, before moving to the next batch</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label consider">Consider</span>
+          <div class="section-content"><ul>
+            <li>An unexpected result is as valuable as a pass — record it with the same care</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label produce">Produce</span>
+          <div class="section-content"><ul>
+            <li>Complete verbatim log of AI responses by stage and batch</li>
+          </ul></div>
+        </div>
+      </div>
+    </td>
+    <td class="role-cell cell-moderator role-col-moderator">
+      <div class="cell-inner">
+        <div class="cell-section">
+          <span class="section-label do">Do</span>
+          <div class="section-content"><ul>
+            <li>Write rationale for every decision at the time it is made — not retrospectively</li>
+            <li>Do not revise decisions after seeing subsequent AI outputs</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label consider">Consider</span>
+          <div class="section-content"><ul>
+            <li>Moderator decisions made in the moment are the data — they must reflect genuine judgment, not hindsight</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label produce">Produce</span>
+          <div class="section-content"><ul>
+            <li>Contemporaneous decision log with rationale per decision</li>
+          </ul></div>
+        </div>
+      </div>
+    </td>
+    <td class="role-cell cell-evaluator role-col-evaluator">
+      <div class="cell-inner">
+        <div class="cell-section">
+          <span class="section-label do">Do</span>
+          <div class="section-content"><ul>
+            <li>Update framework status after each stage completes — do not batch updates</li>
+            <li>Write one sentence per behavior observed: what happened, not just pass or fail</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label consider">Consider</span>
+          <div class="section-content"><ul>
+            <li>The evaluation log is what drives prompt refinement — vague entries produce vague improvements</li>
+          </ul></div>
+        </div>
+        <div class="cell-section">
+          <span class="section-label produce">Produce</span>
+          <div class="section-content"><ul>
+            <li>Fully populated evaluation log after each stage</li>
+            <li>Final experiment summary used to refine prompts before the next community run</li>
+          </ul></div>
+        </div>
+      </div>
+    </td>
+  </tr>
+
+</tbody>
+</table>
+</div>
+
+<script>
+function filterRole(role) {
+  const cols = ['preparer','prompter','moderator','evaluator'];
+  const allBtns = document.querySelectorAll('.role-btn');
+  allBtns.forEach(b => b.classList.remove('active'));
+
+  const activeBtn = document.querySelector(`.role-btn.${role}`);
+  if (activeBtn) activeBtn.classList.add('active');
+
+  if (role === 'all') {
+    document.querySelector('.role-btn.all').classList.add('active');
+    cols.forEach(c => {
+      document.querySelectorAll(`.role-col-${c}`).forEach(el => {
+        el.style.opacity = '1';
+        el.style.filter = 'none';
+      });
+    });
+    return;
+  }
+
+  cols.forEach(c => {
+    const els = document.querySelectorAll(`.role-col-${c}`);
+    if (c === role) {
+      els.forEach(el => { el.style.opacity = '1'; el.style.filter = 'none'; });
+    } else {
+      els.forEach(el => { el.style.opacity = '0.12'; el.style.filter = 'grayscale(1)'; });
+    }
+  });
+}
+</script>
+</body>
+</html>
