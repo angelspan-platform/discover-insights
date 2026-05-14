@@ -8,28 +8,33 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f4f5f7; color: #1a1a2e; font-size: 14px; }
 
-  /* Header */
   .header { background: #1a1a2e; color: #fff; padding: 28px 32px 24px; }
   .header h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.3px; margin-bottom: 4px; }
   .header p { color: #9ba3b0; font-size: 13px; }
 
-  /* Controls */
   .controls { background: #fff; border-bottom: 1px solid #e2e5eb; padding: 14px 32px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
   .controls label { font-size: 12px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin-right: 4px; }
-  select { font-size: 13px; padding: 6px 10px; border: 1px solid #d1d5db; border-radius: 6px; background: #fff; color: #374151; cursor: pointer; outline: none; }
-  select:focus { border-color: #4f6ef7; }
+  select { font-size: 13px; padding: 6px 10px; border: 1px solid #d1d5db; border-radius: 6px; background: #fff; color: #374151; cursor: pointer; }
+  .ctrl-sep { width: 1px; height: 24px; background: #e5e7eb; margin: 0 4px; }
+  .round-btn { font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 20px; border: 2px solid #d1d5db; background: #fff; color: #6b7280; cursor: pointer; transition: all 0.15s; }
+  .round-btn.active.r1 { background: #1a1a2e; color: #fff; border-color: #1a1a2e; }
+  .round-btn.active.r2 { background: #4f46e5; color: #fff; border-color: #4f46e5; }
   .reset-btn { margin-left: auto; font-size: 12px; padding: 6px 12px; background: none; border: 1px solid #d1d5db; border-radius: 6px; color: #6b7280; cursor: pointer; }
-  .reset-btn:hover { background: #f9fafb; }
 
-  /* Summary bar */
+  .round-banner { padding: 10px 32px; font-size: 12px; border-bottom: 1px solid #e2e5eb; display: flex; align-items: center; gap: 10px; }
+  .round-banner.r1 { background: #f0fdf4; color: #166534; }
+  .round-banner.r2 { background: #eef2ff; color: #3730a3; }
+  .round-banner strong { font-weight: 700; }
+
   .summary { display: flex; gap: 8px; padding: 12px 32px; background: #fff; border-bottom: 1px solid #e2e5eb; flex-wrap: wrap; }
   .badge-count { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #6b7280; }
   .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
-  /* Table */
   .table-wrap { padding: 24px 32px; }
   table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
   thead th { background: #f8f9fb; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: #6b7280; padding: 12px 16px; text-align: left; border-bottom: 1px solid #e5e7eb; white-space: nowrap; }
+  thead th.dataset-th { background: #f0fdf4; color: #166534; border-left: 1px solid #e5e7eb; text-align: center; }
+  thead th.r2-th { background: #eef2ff; color: #3730a3; }
   tbody tr.main-row { cursor: pointer; border-bottom: 1px solid #f0f2f5; transition: background 0.1s; }
   tbody tr.main-row:hover { background: #fafbff; }
   tbody tr.main-row.expanded { background: #fafbff; border-bottom: none; }
@@ -43,11 +48,9 @@
   .detail-section h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #9ba3b0; margin-bottom: 6px; }
   .detail-section p { font-size: 13px; color: #374151; line-height: 1.55; }
 
-  /* Chevron */
   .chevron { display: inline-block; transition: transform 0.2s; color: #9ba3b0; font-size: 11px; margin-left: 6px; }
   .expanded .chevron { transform: rotate(90deg); }
 
-  /* Stage pills */
   .stage { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
   .stage-submission  { background: #e0f2fe; color: #0369a1; }
   .stage-theme       { background: #ede9fe; color: #6d28d9; }
@@ -56,32 +59,30 @@
   .stage-memory      { background: #f1f5f9; color: #475569; }
   .stage-principle   { background: #fce7f3; color: #9d174d; }
 
-  /* Priority badges */
   .priority { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
   .priority-mvp  { background: #166534; color: #fff; }
   .priority-v1   { background: #d97706; color: #fff; }
   .priority-v2   { background: #9ca3af; color: #fff; }
   .priority-core { background: #9d174d; color: #fff; }
 
-  /* Dataset */
   .dataset { font-size: 12px; color: #6b7280; }
   .dataset span { display: inline-block; background: #f3f4f6; border-radius: 4px; padding: 1px 6px; margin: 1px 2px; }
 
-  /* Behavior name */
   .behavior-name { font-weight: 600; font-size: 13px; color: #1a1a2e; }
   .behavior-sub { font-size: 12px; color: #6b7280; margin-top: 2px; line-height: 1.4; max-width: 300px; }
 
-  /* Status */
-  .status-select { font-size: 12px; padding: 4px 8px; border: 1px solid #d1d5db; border-radius: 5px; background: #fff; color: #374151; cursor: pointer; }
+  .status-select { font-size: 11px; padding: 3px 6px; border: 1px solid #d1d5db; border-radius: 5px; background: #fff; color: #374151; cursor: pointer; width: 100%; }
+  td.dataset-cell { border-left: 1px solid #f0f2f5; text-align: center; }
 
-  /* Hidden row */
   tr.hidden-row { display: none !important; }
-
-  /* Section divider */
   tr.section-divider td { background: #f4f5f7; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: #9ba3b0; padding: 8px 16px; border-bottom: 1px solid #e5e7eb; }
 
-  /* Principles section note */
-  .principles-note { font-size: 12px; color: #6b7280; padding: 8px 32px 4px; }
+  .col-r1 { }
+  .col-r2 { display: none; }
+  body.round2 .col-r1 { display: none; }
+  body.round2 .col-r2 { display: table-cell; }
+  body.round2 td.col-r2 { display: table-cell; }
+  body.round2 th.col-r2 { display: table-cell; }
 
   @media (max-width: 800px) {
     .table-wrap { padding: 12px; }
@@ -116,7 +117,15 @@
     <option value="V2+">V2+</option>
     <option value="Core">Core principle</option>
   </select>
-  <button class="reset-btn" onclick="resetFilters()">Reset filters</button>
+  <div class="ctrl-sep"></div>
+  <label>Round</label>
+  <button class="round-btn r1 active" data-round="1" onclick="setRound(1)">Round 1 — End-to-End</button>
+  <button class="round-btn r2" data-round="2" onclick="setRound(2)">Round 2 — Targeted</button>
+  <button class="reset-btn" onclick="resetFilters()">Reset</button>
+</div>
+
+<div class="round-banner r1" id="round-banner">
+  <strong>Round 1 — End-to-End per Dataset:</strong> Run the full workflow on each dataset (SPL → Reddit 1 → Reddit 2). Use this as an observation checklist. Mark what you saw on each dataset — not just pass/fail.
 </div>
 
 <div class="summary" id="summary-bar"></div>
@@ -130,9 +139,12 @@
     <th>Stage</th>
     <th>Priority</th>
     <th>What AI Must Do</th>
-    <th>Dataset</th>
     <th>Test Method</th>
-    <th>Status</th>
+    <th class="dataset-th col-r1">SPL</th>
+    <th class="dataset-th col-r1">Reddit 1</th>
+    <th class="dataset-th col-r1">Reddit 2</th>
+    <th class="r2-th col-r2">Status</th>
+    <th class="r2-th col-r2">Dataset</th>
   </tr>
 </thead>
 <tbody id="table-body"></tbody>
@@ -141,298 +153,63 @@
 
 <script>
 const DATA = [
-  // ── SUBMISSION ──────────────────────────────────────────────
-  {
-    id: 1,
-    name: "Mode Detection",
-    sub: "Classify input as topic or insight in real time",
-    stage: "Submission",
-    priority: "MVP",
-    what: "Infer whether a submission is a topic (<8 words) or an insight (8+ words) as the user types. Update the classification live before submission.",
-    method: "Batch",
-    dataset: ["Synthetic", "SPL"],
-    pass: "≥90% correct classification on clear cases. Edge cases (7-word meaningful sentences) handled gracefully without forcing a hard cutoff.",
-    failure: "Short but substantive inputs misclassified as topics. All long inputs treated as equally valid insights regardless of content quality."
-  },
-  {
-    id: 2,
-    name: "Topic Extraction",
-    sub: "Pull 2–4 key terms from insight body",
-    stage: "Submission",
-    priority: "MVP",
-    what: "When an insight is submitted, extract 2–4 key terms and add to the Topic Canvas as grey pills. Terms must appear verbatim in the source — AI does not invent labels.",
-    method: "Batch",
-    dataset: ["SPL"],
-    pass: "Terms are specific and non-generic. Each term appears in the source text verbatim. No duplicates within a single extraction.",
-    failure: "Generic terms like 'process', 'system', or 'issue'. Extracting filler or stop words. Hallucinating terms not present in the source text."
-  },
-  {
-    id: 3,
-    name: "Discussion Title",
-    sub: "Short title faithful to contributor's framing",
-    stage: "Submission",
-    priority: "MVP",
-    what: "Generate a short, descriptive title for each discussion from the insight body. The title must reflect what the contributor actually said — not reframe or editorialize it.",
-    method: "Comparative",
-    dataset: ["SPL"],
-    pass: "Title reflects the specific point made. A reader would not be misled about the content. Titles are distinct from one another across the dataset.",
-    failure: "Over-generalizing ('Process Issues', 'Communication Gap'). Reinterpreting the contributor's meaning. Producing identical or near-identical titles for different inputs."
-  },
-
-  // ── THEME DETECTION ─────────────────────────────────────────
-  {
-    id: 4,
-    name: "Semantic Clustering",
-    sub: "Group inputs by similarity; re-evaluate every 5 submissions",
-    stage: "Theme Detection",
-    priority: "MVP",
-    what: "Group inputs by semantic similarity using embeddings. Re-evaluate after every 5 new submissions. Surface a theme suggestion when ≥5 inputs share a common topic. Run silently in the background — output goes to moderator only.",
-    method: "Incremental",
-    dataset: ["SPL"],
-    pass: "Themes are stable across batches — they don't thrash or disappear with each update. Distinct problems stay distinct. The ≥5 threshold produces meaningful clusters, not noise.",
-    failure: "Theme instability: clusters appear, dissolve, and reappear with each new batch. Over-merging distinct problems into one broad theme. Premature surfacing at N<5 that misleads the moderator."
-  },
-  {
-    id: 5,
-    name: "Theme Naming",
-    sub: "Label + one-sentence rationale per suggested theme",
-    stage: "Theme Detection",
-    priority: "MVP",
-    what: "For each suggested theme, generate a label (under 5 words) and a one-sentence rationale. The label must be editable by the host. The rationale must cite specific inputs, not assert in the abstract.",
-    method: "Batch",
-    dataset: ["SPL"],
-    pass: "Labels are specific: 'Invoice-to-Cash Handoff' not 'Process Issues'. Rationale references at least one concrete input. Label does not impose an interpretation not supported by the data.",
-    failure: "Generic or over-broad labels. Rationale that doesn't cite evidence. Labels that reframe what contributors said rather than reflecting it."
-  },
-  {
-    id: 6,
-    name: "Watching List",
-    sub: "Track early signals before they reach theme threshold",
-    stage: "Theme Detection",
-    priority: "MVP",
-    what: "Track emerging topics with 2–4 matching inputs. Surface to the host as early signals — clearly labelled as not yet actionable. Watching items that reach threshold automatically become theme suggestions.",
-    method: "Incremental",
-    dataset: ["SPL"],
-    pass: "Early signals appear before the ≥5 threshold. Host gets advance visibility. Items that grow past threshold correctly graduate to theme suggestions without manual intervention.",
-    failure: "Everything appears in the watching list (noise). Legitimate early signals missed. Watching items that never graduate clutter the moderator view."
-  },
-  {
-    id: 7,
-    name: "Retroactive Assignment",
-    sub: "Assign all matching prior inputs when a theme activates",
-    stage: "Theme Detection",
-    priority: "MVP",
-    what: "When a moderator activates a theme, ANDI assigns all existing inputs that match — not just future ones. The Topic Canvas updates immediately.",
-    method: "Stress",
-    dataset: ["SPL"],
-    pass: "All relevant pre-existing inputs are assigned on activation. No false positives pulling in marginally related inputs. Update is immediate and complete.",
-    failure: "Missed retroactive assignments leave relevant inputs in 'uncategorized'. Over-assignment pulls in loosely related inputs. Partial or delayed updates that leave the canvas inconsistent."
-  },
-  {
-    id: 8,
-    name: "Split Suggestion",
-    sub: "Detect when one theme contains two distinct sub-problems",
-    stage: "Theme Detection",
-    priority: "V1",
-    what: "Detect when an active theme has high internal diversity — two distinct sub-problems inside one cluster. Surface a split suggestion with draft labels for each sub-theme. Host decides whether to accept.",
-    method: "Comparative",
-    dataset: ["SPL"],
-    pass: "Correctly identifies SPL's order-to-cash theme as containing separate sub-problems (invoicing, collections, onboarding). Proposed split labels are meaningfully distinct.",
-    failure: "Splitting themes that are genuinely unified. Missing splits that are obvious in retrospect. Proposed labels for sub-themes that are too similar to differentiate."
-  },
-
-  // ── DISCUSSION ──────────────────────────────────────────────
-  {
-    id: 9,
-    name: "Follow-up Prompt",
-    sub: "One contextual question per insight, inline in thread",
-    stage: "Discussion",
-    priority: "V1",
-    what: "Post one contextual follow-up question below each insight, inline in the thread. Must reference something specific from the contributor's input. Must read like a curious colleague — not a form field. One question only, never more.",
-    method: "Batch",
-    dataset: ["SPL"],
-    pass: "Question is specific to the content of that input. Would plausibly elicit useful elaboration. Sounds like something a thoughtful person would ask. Single question per insight.",
-    failure: "Generic questions that could apply to any input ('Can you tell us more?'). Multiple questions in one prompt. Challenging or interrogative tone rather than curious. Questions that ignore the specifics of the input."
-  },
-  {
-    id: 10,
-    name: "Conflict Detection",
-    sub: "Flag directly opposing views, especially across roles",
-    stage: "Discussion",
-    priority: "V1",
-    what: "Identify when two contributors — especially from different roles or departments — hold directly opposing views on the same topic. Surface a conflict flag on the theme card and in the brief. Do not attempt to resolve — flag only.",
-    method: "Stress",
-    dataset: ["Reddit", "SPL"],
-    pass: "Flags genuine opposing views correctly. Identifies role difference when present. Does not flag complementary or nuanced views as conflicts.",
-    failure: "False positives: nuance read as opposition. Failing to detect real conflicts. Flagging same-role disagreements without the role-diversity signal. Attempting to arbitrate rather than flag."
-  },
-  {
-    id: 11,
-    name: "Participation Nudge",
-    sub: "Targeted re-engagement for missing roles per theme",
-    stage: "Discussion",
-    priority: "V1",
-    what: "Identify roles or departments that are underrepresented in a specific theme relative to the full participant list. Generate a targeted re-engagement message referencing the specific theme and the missing perspective. Not a generic reminder.",
-    method: "Comparative",
-    dataset: ["SPL"],
-    pass: "Correctly identifies missing roles per theme. Message references the specific theme. Does not nudge participants who have already contributed to that theme.",
-    failure: "Generic 'please participate' messages with no theme reference. Nudging contributors who've already participated. Identifying wrong roles as missing. Same message template for every gap."
-  },
-
-  // ── BRIEF ───────────────────────────────────────────────────
-  {
-    id: 12,
-    name: "Brief Generation",
-    sub: "Full structured brief: summary, tensions, voices, opportunities, gaps",
-    stage: "Brief",
-    priority: "MVP",
-    what: "On moderator request, produce a structured brief covering: ANDI summary, signal strength scores (breadth/depth/consensus), key tensions, representative voices (quoted exactly), opportunity areas, and gap alerts. Treat output as a first draft — host owns it.",
-    method: "Comparative",
-    dataset: ["SPL"],
-    pass: "Themes align with known outcomes from the SPL engagement. Tensions reflect real disagreements in the data. Opportunities are actionable and specific. No fabricated quotes. Confidence scores are explained.",
-    failure: "Fabricated or paraphrased quotes presented as verbatim. False confidence scores with no explanation. Generic opportunities ('explore further', 'invest in technology'). Missing tensions that were present in the data."
-  },
-  {
-    id: 13,
-    name: "Gap Alerts",
-    sub: "Named missing perspectives per theme",
-    stage: "Brief",
-    priority: "V1",
-    what: "In the brief, identify contributor roles or departments that are underrepresented in each theme relative to the full participant list. Name the specific missing voice and explain why it matters for that theme.",
-    method: "Comparative",
-    dataset: ["SPL"],
-    pass: "Gaps are specific and named (e.g., 'No input from warehouse operations on the inventory theme'). Each gap is tied to a specific theme. Gap alerts would genuinely affect the brief's conclusions.",
-    failure: "Generic gap language ('more research needed'). Gaps flagged that are already represented in the data. Gaps that don't materially affect the theme's conclusions."
-  },
-
-  // ── MEMORY ──────────────────────────────────────────────────
-  {
-    id: 14,
-    name: "Cross-Workshop Tracking",
-    sub: "Connect recurring themes across sessions",
-    stage: "Memory",
-    priority: "V2+",
-    what: "Connect themes that recur across multiple workshops for the same client or on the same topic. Detect whether a theme is growing, persisting, or resolved over time. Surface in a longitudinal view available to hosts.",
-    method: "—",
-    dataset: ["Multi-workshop"],
-    pass: "Recurring themes correctly identified across sessions. Change over time (growth, persistence, resolution) accurately tracked. Host can see historical context without re-reading prior briefs.",
-    failure: "False connections between unrelated workshops. Missing genuine recurring patterns. No differentiation between a resolved theme and a dormant one."
-  },
-  {
-    id: 15,
-    name: "Institutional Memory",
-    sub: "Searchable archive; new workshops reference prior signal",
-    stage: "Memory",
-    priority: "V2+",
-    what: "Build a searchable archive of all themes, briefs, and resolved findings. New workshops automatically reference prior signal on related topics. Memory operates at the theme level — never at the individual contributor level.",
-    method: "—",
-    dataset: ["Multi-workshop"],
-    pass: "Prior relevant themes surface in new workshop context without manual retrieval. Archive is searchable. No individual contributor is traceable across sessions through the memory layer.",
-    failure: "Over-connecting unrelated workshops. Surfacing irrelevant historical data that distracts from current signal. Performance degradation at scale. Any path to identifying anonymous contributors."
-  },
-
-  // ── PRINCIPLES ──────────────────────────────────────────────
-  {
-    id: 16,
-    name: "Never rewords input",
-    sub: "Contributor's exact words appear in discussions and briefs",
-    stage: "Principle",
-    priority: "Core",
-    what: "ANDI generates titles and extracts terms — it does not paraphrase, clean up, or reinterpret what contributors wrote. The original text is always preserved and surfaced verbatim.",
-    method: "Verify across all stages",
-    dataset: ["All"],
-    pass: "Every quote or voice in any output is traceable to exact source text. No paraphrasing presented as a direct quote.",
-    failure: "Any output that presents AI-generated language as a contributor's own words. Subtle rewording that changes emphasis or meaning."
-  },
-  {
-    id: 17,
-    name: "Themes never auto-activate",
-    sub: "Moderator approval required before contributors see any theme",
-    stage: "Principle",
-    priority: "Core",
-    what: "No cluster or theme suggestion is ever shown to participants without explicit moderator approval. ANDI suggests; the host decides.",
-    method: "Verify at Theme Detection",
-    dataset: ["All"],
-    pass: "Zero cases where a theme is visible to participants before moderator action. Suggestions remain in the moderator view only.",
-    failure: "Any condition — error state, timeout, default setting — that surfaces a theme to contributors without explicit moderator approval."
-  },
-  {
-    id: 18,
-    name: "AI never appears as a contributor",
-    sub: "ANDI is always visually distinct; never a named voice",
-    stage: "Principle",
-    priority: "Core",
-    what: "ANDI has its own avatar and label in all interfaces. It asks questions; it does not share opinions. It never appears as a named participant in any discussion or in any brief.",
-    method: "Verify at Discussion",
-    dataset: ["All"],
-    pass: "ANDI is immediately visually distinguishable from contributor inputs in all views. No brief or discussion output presents ANDI language as a participant voice.",
-    failure: "Any UI state where ANDI's questions or summaries could be mistaken for a contributor's input."
-  },
-  {
-    id: 19,
-    name: "No input is suppressed",
-    sub: "All submissions are used in synthesis regardless of vote score",
-    stage: "Principle",
-    priority: "Core",
-    what: "ANDI does not hide, filter, or deprioritize any contribution — including low-voted or anonymous ones. All inputs are visible to contributors and used in synthesis. Negative-score inputs appear as contrary perspectives in briefs.",
-    method: "Verify at Brief",
-    dataset: ["All"],
-    pass: "Every submission appears in the data used for brief generation. Low-scored inputs appear as contrary perspectives, not as omissions.",
-    failure: "Any filtering logic that silently drops inputs from the synthesis. Brief output that reflects only high-voted contributions."
-  },
-  {
-    id: 20,
-    name: "AI surfaces, never decides",
-    sub: "Opportunity areas are findings, not directives",
-    stage: "Principle",
-    priority: "Core",
-    what: "ANDI does not recommend a course of action, prioritize a roadmap, or tell the host what to build. Opportunity areas in briefs are findings derived from data — not instructions.",
-    method: "Verify at Brief",
-    dataset: ["All"],
-    pass: "Brief language is observational and evidential throughout. No opportunity area implies a specific decision or action as the right answer.",
-    failure: "Language like 'you should prioritize', 'the data shows you need to invest in', or any framing that positions AI judgment as the conclusion."
-  }
+  { id:1, name:"Mode Detection", sub:"Classify input as topic or insight in real time", stage:"Submission", priority:"MVP", what:"Infer whether a submission is a topic (<8 words) or an insight (8+ words) as the user types. Update the classification live before submission.", method:"Batch", dataset:["Synthetic","SPL"], pass:"≥90% correct classification on clear cases. Edge cases (7-word meaningful sentences) handled gracefully without forcing a hard cutoff.", failure:"Short but substantive inputs misclassified as topics. All long inputs treated as equally valid insights regardless of content quality." },
+  { id:2, name:"Topic Extraction", sub:"Pull 2–4 key terms from insight body", stage:"Submission", priority:"MVP", what:"When an insight is submitted, extract 2–4 key terms and add to the Topic Canvas as grey pills. Terms must appear verbatim in the source — AI does not invent labels.", method:"Batch", dataset:["SPL"], pass:"Terms are specific and non-generic. Each term appears in the source text verbatim. No duplicates within a single extraction.", failure:"Generic terms like 'process', 'system', or 'issue'. Extracting filler or stop words. Hallucinating terms not present in the source text." },
+  { id:3, name:"Discussion Title", sub:"Short title faithful to contributor's framing", stage:"Submission", priority:"MVP", what:"Generate a short, descriptive title for each discussion from the insight body. The title must reflect what the contributor actually said — not reframe or editorialize it.", method:"Comparative", dataset:["SPL"], pass:"Title reflects the specific point made. A reader would not be misled about the content. Titles are distinct from one another across the dataset.", failure:"Over-generalizing ('Process Issues', 'Communication Gap'). Reinterpreting the contributor's meaning. Producing identical or near-identical titles for different inputs." },
+  { id:4, name:"Semantic Clustering", sub:"Group inputs by similarity; re-evaluate every 5 submissions", stage:"Theme Detection", priority:"MVP", what:"Group inputs by semantic similarity. Re-evaluate after every 5 new submissions. Surface a theme suggestion when ≥5 inputs share a common topic. Run silently — output goes to moderator only.", method:"Incremental", dataset:["SPL"], pass:"Themes are stable across batches. Distinct problems stay distinct. The ≥5 threshold produces meaningful clusters, not noise.", failure:"Theme instability: clusters appear, dissolve, and reappear with each new batch. Over-merging distinct problems. Premature surfacing at N<5." },
+  { id:5, name:"Theme Naming", sub:"Label + one-sentence rationale per suggested theme", stage:"Theme Detection", priority:"MVP", what:"For each suggested theme, generate a label (under 5 words) and a one-sentence rationale. The label must be editable. The rationale must cite specific inputs, not assert in the abstract.", method:"Batch", dataset:["SPL"], pass:"Labels are specific: 'Invoice-to-Cash Handoff' not 'Process Issues'. Rationale references at least one concrete input.", failure:"Generic or over-broad labels. Rationale that doesn't cite evidence. Labels that reframe what contributors said." },
+  { id:6, name:"Watching List", sub:"Track early signals before they reach theme threshold", stage:"Theme Detection", priority:"MVP", what:"Track emerging topics with 2–4 matching inputs. Surface to the host as early signals — clearly labelled as not yet actionable. Watching items that reach threshold become theme suggestions automatically.", method:"Incremental", dataset:["SPL"], pass:"Early signals appear before the ≥5 threshold. Host gets advance visibility. Items that grow past threshold correctly graduate to theme suggestions.", failure:"Everything appears in the watching list (noise). Legitimate early signals missed. Watching items that never graduate clutter the moderator view." },
+  { id:7, name:"Retroactive Assignment", sub:"Assign all matching prior inputs when a theme activates", stage:"Theme Detection", priority:"MVP", what:"When a moderator activates a theme, ANDI assigns all existing inputs that match — not just future ones. The Topic Canvas updates immediately.", method:"Stress", dataset:["SPL"], pass:"All relevant pre-existing inputs are assigned on activation. No false positives. Update is immediate and complete.", failure:"Missed retroactive assignments. Over-assignment of loosely related inputs. Partial or delayed updates." },
+  { id:8, name:"Split Suggestion", sub:"Detect when one theme contains two distinct sub-problems", stage:"Theme Detection", priority:"V1", what:"Detect when an active theme has high internal diversity. Surface a split suggestion with draft labels for each sub-theme. Host decides whether to accept.", method:"Comparative", dataset:["SPL"], pass:"Correctly identifies SPL's order-to-cash theme as containing separate sub-problems. Proposed split labels are meaningfully distinct.", failure:"Splitting themes that are genuinely unified. Missing splits that are obvious in retrospect." },
+  { id:9, name:"Follow-up Prompt", sub:"One contextual question per insight, inline in thread", stage:"Discussion", priority:"V1", what:"Post one contextual follow-up question below each insight, inline in the thread. Must reference something specific from the contributor's input. Must read like a curious colleague — not a form field. One question only.", method:"Batch", dataset:["SPL"], pass:"Question is specific to the content of that input. Would plausibly elicit useful elaboration. Single question per insight.", failure:"Generic questions ('Can you tell us more?'). Multiple questions in one prompt. Questions that ignore the specifics of the input." },
+  { id:10, name:"Conflict Detection", sub:"Flag directly opposing views, especially across roles", stage:"Discussion", priority:"V1", what:"Identify when two contributors — especially from different roles or departments — hold directly opposing views on the same topic. Surface a conflict flag. Do not attempt to resolve — flag only.", method:"Stress", dataset:["Reddit","SPL"], pass:"Flags genuine opposing views correctly. Identifies role difference when present. Does not flag complementary views as conflicts.", failure:"False positives: nuance read as opposition. Failing to detect real conflicts. Attempting to arbitrate rather than flag." },
+  { id:11, name:"Participation Nudge", sub:"Targeted re-engagement for missing roles per theme", stage:"Discussion", priority:"V1", what:"Identify roles underrepresented in a specific theme. Generate a targeted re-engagement message referencing the specific theme and the missing perspective. Not a generic reminder.", method:"Comparative", dataset:["SPL"], pass:"Correctly identifies missing roles per theme. Message references the specific theme. Does not nudge participants who've already contributed.", failure:"Generic 'please participate' messages with no theme reference. Nudging contributors who've already participated." },
+  { id:12, name:"Brief Generation", sub:"Full structured brief: summary, tensions, voices, opportunities, gaps", stage:"Brief", priority:"MVP", what:"On moderator request, produce a structured brief covering: ANDI summary, signal strength scores, key tensions, representative voices (quoted exactly), opportunity areas, and gap alerts. Host owns the output — treat as a first draft.", method:"Comparative", dataset:["SPL"], pass:"Themes align with known SPL outcomes. Tensions reflect real disagreements. Opportunities are actionable and specific. No fabricated quotes.", failure:"Fabricated or paraphrased quotes. False confidence scores. Generic opportunities. Missing tensions present in the data." },
+  { id:13, name:"Gap Alerts", sub:"Named missing perspectives per theme", stage:"Brief", priority:"V1", what:"In the brief, identify contributor roles underrepresented in each theme. Name the specific missing voice and explain why it matters for that theme.", method:"Comparative", dataset:["SPL"], pass:"Gaps are specific and named. Each gap is tied to a specific theme. Gap alerts would genuinely affect the brief's conclusions.", failure:"Generic gap language ('more research needed'). Gaps flagged that are already represented. Gaps that don't affect conclusions." },
+  { id:14, name:"Cross-Workshop Tracking", sub:"Connect recurring themes across sessions", stage:"Memory", priority:"V2+", what:"Connect themes that recur across multiple workshops. Detect whether a theme is growing, persisting, or resolved. Surface in a longitudinal view for hosts.", method:"—", dataset:["Multi-workshop"], pass:"Recurring themes correctly identified across sessions. Change over time accurately tracked.", failure:"False connections between unrelated workshops. No differentiation between resolved and dormant themes." },
+  { id:15, name:"Institutional Memory", sub:"Searchable archive; new workshops reference prior signal", stage:"Memory", priority:"V2+", what:"Build a searchable archive of all themes, briefs, and resolved findings. New workshops automatically reference prior signal. Memory operates at the theme level — never at the individual contributor level.", method:"—", dataset:["Multi-workshop"], pass:"Prior relevant themes surface in new workshop context. Archive is searchable. No individual contributor is traceable.", failure:"Over-connecting unrelated workshops. Surfacing irrelevant historical data. Any path to identifying anonymous contributors." },
+  { id:16, name:"Never rewords input", sub:"Contributor's exact words appear in discussions and briefs", stage:"Principle", priority:"Core", what:"ANDI generates titles and extracts terms — it does not paraphrase, clean up, or reinterpret what contributors wrote. The original text is always preserved and surfaced verbatim.", method:"Verify across all stages", dataset:["All"], pass:"Every quote or voice in any output is traceable to exact source text. No paraphrasing presented as a direct quote.", failure:"Any output that presents AI-generated language as a contributor's own words." },
+  { id:17, name:"Themes never auto-activate", sub:"Moderator approval required before contributors see any theme", stage:"Principle", priority:"Core", what:"No cluster or theme suggestion is ever shown to participants without explicit moderator approval. ANDI suggests; the host decides.", method:"Verify at Theme Detection", dataset:["All"], pass:"Zero cases where a theme is visible to participants before moderator action.", failure:"Any condition that surfaces a theme to contributors without explicit moderator approval." },
+  { id:18, name:"AI never appears as a contributor", sub:"ANDI is always visually distinct; never a named voice", stage:"Principle", priority:"Core", what:"ANDI has its own avatar and label in all interfaces. It asks questions; it does not share opinions. It never appears as a named participant in any discussion or brief.", method:"Verify at Discussion", dataset:["All"], pass:"ANDI is immediately visually distinguishable from contributor inputs in all views.", failure:"Any UI state where ANDI's questions or summaries could be mistaken for a contributor's input." },
+  { id:19, name:"No input is suppressed", sub:"All submissions are used in synthesis regardless of vote score", stage:"Principle", priority:"Core", what:"ANDI does not hide, filter, or deprioritize any contribution. All inputs are visible and used in synthesis. Negative-score inputs appear as contrary perspectives in briefs.", method:"Verify at Brief", dataset:["All"], pass:"Every submission appears in the data used for brief generation. Low-scored inputs appear as contrary perspectives, not as omissions.", failure:"Any filtering logic that silently drops inputs from the synthesis." },
+  { id:20, name:"AI surfaces, never decides", sub:"Opportunity areas are findings, not directives", stage:"Principle", priority:"Core", what:"ANDI does not recommend a course of action or prioritize a roadmap. Opportunity areas in briefs are findings derived from data — not instructions.", method:"Verify at Brief", dataset:["All"], pass:"Brief language is observational and evidential throughout. No opportunity area implies a specific decision as the right answer.", failure:"Language like 'you should prioritize' or any framing that positions AI judgment as the conclusion." }
 ];
 
-const STAGE_COLORS = {
-  "Submission": "stage-submission",
-  "Theme Detection": "stage-theme",
-  "Discussion": "stage-discussion",
-  "Brief": "stage-brief",
-  "Memory": "stage-memory",
-  "Principle": "stage-principle"
-};
-const PRIORITY_COLORS = {
-  "MVP": "priority-mvp",
-  "V1": "priority-v1",
-  "V2+": "priority-v2",
-  "Core": "priority-core"
-};
-const DOT_COLORS = {
-  "MVP": "#166534",
-  "V1": "#d97706",
-  "V2+": "#9ca3af",
-  "Core": "#9d174d"
-};
-const STAGE_ORDER = ["Submission","Theme Detection","Discussion","Brief","Memory","Principle"];
+const STAGE_COLORS = { "Submission":"stage-submission","Theme Detection":"stage-theme","Discussion":"stage-discussion","Brief":"stage-brief","Memory":"stage-memory","Principle":"stage-principle" };
+const PRIORITY_COLORS = { "MVP":"priority-mvp","V1":"priority-v1","V2+":"priority-v2","Core":"priority-core" };
+const DOT_COLORS = { "MVP":"#166534","V1":"#d97706","V2+":"#9ca3af","Core":"#9d174d" };
+
+let currentRound = 1;
+
+function setRound(r) {
+  currentRound = r;
+  document.querySelectorAll('.round-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.round-btn[data-round="${r}"]`).classList.add('active');
+  document.body.classList.toggle('round2', r === 2);
+  const banner = document.getElementById('round-banner');
+  if (r === 1) {
+    banner.className = 'round-banner r1';
+    banner.innerHTML = '<strong>Round 1 — End-to-End per Dataset:</strong> Run the full workflow on each dataset (SPL → Reddit 1 → Reddit 2). Use this as an observation checklist. Mark what you saw on each dataset.';
+  } else {
+    banner.className = 'round-banner r2';
+    banner.innerHTML = '<strong>Round 2 — Targeted Behavior Testing:</strong> Test specific behaviors in isolation — focused on rows that showed problems in Round 1. Run one behavior at a time. Score pass / partial / fail.';
+  }
+}
 
 function buildTable(data) {
   const tbody = document.getElementById('table-body');
   tbody.innerHTML = '';
   let currentStage = null;
-
   data.forEach(row => {
     if (row.stage !== currentStage) {
       currentStage = row.stage;
       const divTr = document.createElement('tr');
       divTr.className = 'section-divider';
       divTr.setAttribute('data-stage', row.stage);
-      divTr.innerHTML = `<td colspan="8">${row.stage}</td>`;
+      divTr.innerHTML = `<td colspan="11">${row.stage}</td>`;
       tbody.appendChild(divTr);
     }
-
     const datasets = row.dataset.map(d => `<span>${d}</span>`).join('');
-
     const mainTr = document.createElement('tr');
     mainTr.className = 'main-row';
     mainTr.setAttribute('data-id', row.id);
@@ -440,24 +217,16 @@ function buildTable(data) {
     mainTr.setAttribute('data-priority', row.priority);
     mainTr.innerHTML = `
       <td style="color:#c4c9d4;font-size:11px;padding-left:12px;">▶<span class="chevron"></span></td>
-      <td>
-        <div class="behavior-name">${row.name}</div>
-        <div class="behavior-sub">${row.sub}</div>
-      </td>
+      <td><div class="behavior-name">${row.name}</div><div class="behavior-sub">${row.sub}</div></td>
       <td><span class="stage ${STAGE_COLORS[row.stage]}">${row.stage}</span></td>
       <td><span class="priority ${PRIORITY_COLORS[row.priority]}">${row.priority}</span></td>
-      <td style="max-width:260px;font-size:13px;color:#374151;line-height:1.45;">${row.what}</td>
-      <td class="dataset">${datasets}</td>
+      <td style="max-width:240px;font-size:12px;color:#374151;line-height:1.45;">${row.what}</td>
       <td style="font-size:12px;color:#6b7280;">${row.method}</td>
-      <td>
-        <select class="status-select" onclick="event.stopPropagation()">
-          <option value="">— Not started</option>
-          <option value="ip">▶ In progress</option>
-          <option value="pass">✓ Pass</option>
-          <option value="partial">◑ Partial</option>
-          <option value="fail">✗ Fail</option>
-        </select>
-      </td>
+      <td class="dataset-cell col-r1"><select class="status-select" onclick="event.stopPropagation()"><option>— Not run</option><option>✓ Observed</option><option>⚠ Issues noted</option><option>✗ Fail</option></select></td>
+      <td class="dataset-cell col-r1"><select class="status-select" onclick="event.stopPropagation()"><option>— Not run</option><option>✓ Observed</option><option>⚠ Issues noted</option><option>✗ Fail</option></select></td>
+      <td class="dataset-cell col-r1"><select class="status-select" onclick="event.stopPropagation()"><option>— Not run</option><option>✓ Observed</option><option>⚠ Issues noted</option><option>✗ Fail</option></select></td>
+      <td class="col-r2"><select class="status-select" onclick="event.stopPropagation()"><option value="">— Not started</option><option value="ip">▶ In progress</option><option value="pass">✓ Pass</option><option value="partial">◑ Partial</option><option value="fail">✗ Fail</option></select></td>
+      <td class="dataset col-r2">${datasets}</td>
     `;
     tbody.appendChild(mainTr);
 
@@ -467,20 +236,11 @@ function buildTable(data) {
     detailTr.setAttribute('data-stage', row.stage);
     detailTr.setAttribute('data-priority', row.priority);
     detailTr.innerHTML = `
-      <td class="detail-td" colspan="8">
+      <td class="detail-td" colspan="11">
         <div class="detail-inner">
-          <div class="detail-section">
-            <h4>Pass Criteria</h4>
-            <p>${row.pass}</p>
-          </div>
-          <div class="detail-section">
-            <h4>Key Failure Modes</h4>
-            <p>${row.failure}</p>
-          </div>
-          <div class="detail-section">
-            <h4>Full Prompt Requirement</h4>
-            <p>${row.what}</p>
-          </div>
+          <div class="detail-section"><h4>Pass Criteria</h4><p>${row.pass}</p></div>
+          <div class="detail-section"><h4>Key Failure Modes</h4><p>${row.failure}</p></div>
+          <div class="detail-section"><h4>Full Prompt Requirement</h4><p>${row.what}</p></div>
         </div>
       </td>
     `;
@@ -490,86 +250,49 @@ function buildTable(data) {
 
 function buildSummary(data) {
   const counts = {};
-  data.forEach(r => { counts[r.priority] = (counts[r.priority] || 0) + 1; });
-  const bar = document.getElementById('summary-bar');
-  bar.innerHTML = '<span style="font-size:12px;color:#6b7280;margin-right:8px;">Showing:</span>' +
-    Object.entries(counts).map(([k,v]) => `
-      <span class="badge-count">
-        <span class="dot" style="background:${DOT_COLORS[k]}"></span>
-        <strong>${v}</strong>&nbsp;${k}
-      </span>`).join('<span style="color:#d1d5db;margin:0 4px;">|</span>');
+  data.forEach(r => { counts[r.priority] = (counts[r.priority]||0)+1; });
+  document.getElementById('summary-bar').innerHTML = '<span style="font-size:12px;color:#6b7280;margin-right:8px;">Showing:</span>' +
+    Object.entries(counts).map(([k,v]) => `<span class="badge-count"><span class="dot" style="background:${DOT_COLORS[k]}"></span><strong>${v}</strong>&nbsp;${k}</span>`).join('<span style="color:#d1d5db;margin:0 4px;">|</span>');
 }
 
 function applyFilters() {
   const stage = document.getElementById('filter-stage').value;
   const priority = document.getElementById('filter-priority').value;
-  const rows = document.querySelectorAll('#table-body tr');
-  let lastDivider = null;
-
-  rows.forEach(tr => {
-    if (tr.classList.contains('section-divider')) {
-      lastDivider = tr;
-      return;
-    }
+  document.querySelectorAll('#table-body tr').forEach(tr => {
+    if (tr.classList.contains('section-divider')) return;
     const s = tr.getAttribute('data-stage');
     const p = tr.getAttribute('data-priority');
-    const stageMatch = stage === 'all' || s === stage;
-    const priMatch = priority === 'all' || p === priority;
-    const show = stageMatch && priMatch;
-    tr.classList.toggle('hidden-row', !show);
-    if (tr.classList.contains('detail-row') && show) {
-      // keep detail hidden unless manually opened
-    }
+    tr.classList.toggle('hidden-row', !((stage==='all'||s===stage)&&(priority==='all'||p===priority)));
   });
-
-  // Hide dividers with no visible rows
   document.querySelectorAll('#table-body tr.section-divider').forEach(div => {
     const st = div.getAttribute('data-stage');
-    const hasVisible = Array.from(document.querySelectorAll(`#table-body tr.main-row[data-stage="${st}"]`))
-      .some(r => !r.classList.contains('hidden-row'));
+    const hasVisible = Array.from(document.querySelectorAll(`#table-body tr.main-row[data-stage="${st}"]`)).some(r=>!r.classList.contains('hidden-row'));
     div.classList.toggle('hidden-row', !hasVisible);
   });
-
-  // Update summary
   const visible = Array.from(document.querySelectorAll('#table-body tr.main-row:not(.hidden-row)'));
   const cnt = {};
-  visible.forEach(r => { const p = r.getAttribute('data-priority'); cnt[p] = (cnt[p]||0)+1; });
-  const bar = document.getElementById('summary-bar');
-  if (visible.length === 0) {
-    bar.innerHTML = '<span style="font-size:12px;color:#9ca3af;">No behaviors match the current filters.</span>';
-    return;
-  }
-  bar.innerHTML = `<span style="font-size:12px;color:#6b7280;margin-right:8px;">Showing ${visible.length} of ${DATA.length}:</span>` +
-    Object.entries(cnt).map(([k,v]) => `
-      <span class="badge-count">
-        <span class="dot" style="background:${DOT_COLORS[k]}"></span>
-        <strong>${v}</strong>&nbsp;${k}
-      </span>`).join('<span style="color:#d1d5db;margin:0 4px;">|</span>');
+  visible.forEach(r => { const p=r.getAttribute('data-priority'); cnt[p]=(cnt[p]||0)+1; });
+  document.getElementById('summary-bar').innerHTML = `<span style="font-size:12px;color:#6b7280;margin-right:8px;">Showing ${visible.length} of ${DATA.length}:</span>` +
+    Object.entries(cnt).map(([k,v]) => `<span class="badge-count"><span class="dot" style="background:${DOT_COLORS[k]}"></span><strong>${v}</strong>&nbsp;${k}</span>`).join('<span style="color:#d1d5db;margin:0 4px;">|</span>');
 }
 
 function resetFilters() {
-  document.getElementById('filter-stage').value = 'all';
-  document.getElementById('filter-priority').value = 'all';
+  document.getElementById('filter-stage').value='all';
+  document.getElementById('filter-priority').value='all';
   applyFilters();
 }
 
-// Row expand/collapse
 document.addEventListener('click', e => {
   const mainRow = e.target.closest('tr.main-row');
   if (!mainRow) return;
   const id = mainRow.getAttribute('data-id');
   const detailRow = document.querySelector(`tr.detail-row[data-id="${id}"]`);
   const isOpen = detailRow.classList.contains('open');
-  // Close all
-  document.querySelectorAll('tr.main-row.expanded').forEach(r => r.classList.remove('expanded'));
-  document.querySelectorAll('tr.detail-row.open').forEach(r => r.classList.remove('open'));
-  if (!isOpen) {
-    mainRow.classList.add('expanded');
-    detailRow.classList.add('open');
-  }
+  document.querySelectorAll('tr.main-row.expanded').forEach(r=>r.classList.remove('expanded'));
+  document.querySelectorAll('tr.detail-row.open').forEach(r=>r.classList.remove('open'));
+  if (!isOpen) { mainRow.classList.add('expanded'); detailRow.classList.add('open'); }
 });
 
-// Init
 buildTable(DATA);
 buildSummary(DATA);
 </script>
